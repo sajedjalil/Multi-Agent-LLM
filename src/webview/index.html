@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- The style will be injected directly into the following style tag -->
+  <!-- Placeholder for the style content -->
+  <style nonce="${nonce}">
+    /* style-placeholder */
+  </style>
+  <title>LLM Pipeline Dashboard</title>
+</head>
+<body>
+  <div class="header-title">Choose your Language Model</div>
+  <div class="container">
+    <!-- Draggable dropdown lists -->
+    <!-- Make sure to assign unique IDs to each dropdown for the drag functionality to work -->
+    <div class="draggable-dropdown" draggable="true" id="dropdown1" ondragstart="drag(event)">
+      <label>
+        <select>
+          <option value="gpt4">GPT-4</option>
+          <option value="gpt3.5">GPT-3.5</option>
+          <option value="bard">Bard</option>
+        </select>
+      </label>
+    </div>
+    <!-- Repeat for other dropdowns -->
+    <div class="draggable-dropdown" draggable="true" id="dropdown2" ondragstart="drag(event)">
+      <label>
+        <select>
+          <option value="gpt4">GPT-4</option>
+          <option value="gpt3.5">GPT-3.5</option>
+          <option value="bard">Bard</option>
+        </select>
+      </label>
+    </div>
+    <div class="draggable-dropdown" id="dropdown3" draggable="true" ondragstart="drag(event)">
+      <label>
+        <select>
+          <option value="gpt4">GPT-4</option>
+          <option value="gpt3.5">GPT-3.5</option>
+          <option value="bard">Bard</option>
+        </select>
+      </label>
+    </div>
+    <div class="draggable-dropdown" id="dropdown4" draggable="true" ondragstart="drag(event)">
+      <label>
+        <select>
+          <option value="gpt4">GPT-4</option>
+          <option value="gpt3.5">GPT-3.5</option>
+          <option value="bard">Bard</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <!-- Drop zone -->
+  <div id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)">Drop here</div>
+
+  <script nonce="${nonce}">
+    // script-placeholder
+  </script>
+  
+</body>
+</html>

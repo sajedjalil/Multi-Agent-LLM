@@ -18,6 +18,10 @@
       {
         "command": "multi-agent-llm.openDashboard",
         "title": "Open Dashboard"
+      },
+      {
+        "command": "multi-agent-llm.runCode",
+        "title": "Run Code"
       }
     ]
   },

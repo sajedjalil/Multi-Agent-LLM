@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import { PythonCodeLensProvider } from './PythonCodeLensProvider';
 import { chat as gptChat } from '../apis/openaiClient';
 import { chat as makersuitChat } from '../apis/makersuitClient';
-import { gpt4 } from '../apis/gpt';
 
 export function createCodeLensMain(context: vscode.ExtensionContext) {
 

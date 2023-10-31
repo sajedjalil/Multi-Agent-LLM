@@ -2,6 +2,8 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
 import { IDropdownItem } from './IDropdownItem';
+import { apiMappings } from '../apis/apiNameMappings';
+
 // Import the interface
 
 // Now you can use IDropdownItem in this file
@@ -28,6 +30,13 @@ export function createDashboard(context: vscode.ExtensionContext) {
   const scriptContent = fs.readFileSync(scriptFilePath, 'utf8');
 
   const nonce = getNonce();
+
+  // Now create dropdown options using the apiMappings
+  const dropdownOptions = Object.entries(apiMappings).map(([key, value]) => `<option value="${value}">${key}</option>`).join('');
+
+  // Find and replace the placeholder in your HTML with the created dropdown options
+  htmlContent = htmlContent.replace(/<select>(.*?)<\/select>/gs, `<select>$1${dropdownOptions}</select>`);
+
 
   // Replace placeholders in the HTML content
   htmlContent = htmlContent.replace('/* style-placeholder */', styleContent);

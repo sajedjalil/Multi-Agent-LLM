@@ -1,27 +1,84 @@
-.container {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-  }
-  
-.draggable-dropdown {
-    margin: 0 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    padding: 10px;
-}
-  
 .header-title {
-    text-align: center;
-    margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 }
-  
+
+.container, #drop-zone {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.dropdown-container h3, .drop-column h3 {
+  text-align: center;
+}
+
+.draggable-dropdown {
+  margin: 10px;
+  background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%); /* Gradient background */
+  border: none; /* Remove borders */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px;
+  box-shadow: 0 3px 5px 2px rgba(255, 105, 135, 0.3); /* Soft shadow for depth */
+  color: white; /* Text color */
+  transition: transform 0.2s, box-shadow 0.2s; /* Smooth transitions */
+}
+
+/* 3D hover effect */
+.draggable-dropdown:hover {
+  transform: translateY(-5px); /* Move up slightly */
+  box-shadow: 0 5px 8px 3px rgba(255, 105, 135, 0.5); /* Increase shadow */
+}
+
+/* Style for dropdown <select> and <option> elements */
+.draggable-dropdown select {
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+  border: none;
+  color: white;
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px; /* Consistent rounded corners */
+}
+
+.draggable-dropdown select option {
+  background-color: black; /* Black background for options */
+  color: white;
+}
+
+body {
+  background-color: rgb(31, 29, 29); /* Set body background to black */
+  color: white; /* Set text color to white for contrast */
+}
+
 #drop-zone {
-    height: 100px;
-    line-height: 100px;
-    text-align: center;
-    border: 2px dashed #ccc;
-    background-color: white;
-    color: #333;
+  border: 2px dashed #ccc;
+  padding: 10px;
+  background-color: rgb(77, 77, 77);
 }
-  
+
+.drop-column {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  flex-grow: 1;
+  height: 300px;
+  width: 150px; /* Set a fixed width for columns */
+  overflow: hidden; /* Hide overflow content */
+  border: 1px dashed #ccc;
+  position: relative;
+}
+
+.closeButton {
+  width: 25px; /* Set width of the button */
+  height: 25px; /* Set height of the button */
+  border-radius: 50%; /* Makes the button round */
+  background-color: red; /* Set background color */
+  color: white; /* Set text color */
+  border: none; /* Remove border */
+  cursor: pointer; /* Set cursor to pointer to indicate it’s clickable */
+  font-size: 14px; /* Set font size of the X mark */
+  font-weight: bold; /* Set font weight of the X mark */
+  display: inline; /* Use flexbox for centering the X mark */
+  justify-content: center; /* Center the X mark horizontally */
+  align-items: center; /* Center the X mark vertically */
+}

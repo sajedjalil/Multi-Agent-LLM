@@ -9,52 +9,82 @@
   <title>LLM Pipeline Dashboard</title>
 </head>
 <body>
-  <div class="header-title">Choose your Language Model</div>
+  <h3 style="text-align: center;">Choose Your Workflow</h3>
   <div class="container">
     <!-- Draggable dropdown lists -->
     <!-- Make sure to assign unique IDs to each dropdown for the drag functionality to work -->
-    <div class="draggable-dropdown" draggable="true" id="dropdown1" ondragstart="drag(event)">
-      <label>
-        <select>
-          <option value="gpt4">GPT-4</option>
-          <option value="gpt3.5">GPT-3.5</option>
-          <option value="bard">Bard</option>
-        </select>
-      </label>
+    <div class="dropdown-container" center>
+      <h3>Code Generator</h3>
+      <div class="draggable-dropdown" draggable="true" id="dropdown_1" ondragstart="drag(event)">
+        <label>
+          <select>
+            <option value="gpt4">GPT-4</option>
+            <option value="gpt3.5">GPT-3.5</option>
+            <option value="bard">Bard</option>
+          </select>
+        </label>
+      </div>
     </div>
-    <!-- Repeat for other dropdowns -->
-    <div class="draggable-dropdown" draggable="true" id="dropdown2" ondragstart="drag(event)">
-      <label>
-        <select>
-          <option value="gpt4">GPT-4</option>
-          <option value="gpt3.5">GPT-3.5</option>
-          <option value="bard">Bard</option>
-        </select>
-      </label>
+    <div class="dropdown-container">
+      <h3>Test Generator</h3>
+      <div class="draggable-dropdown" draggable="true" id="dropdown_2" ondragstart="drag(event)">
+        <label>
+          <select>
+            <option value="gpt4">GPT-4</option>
+            <option value="gpt3.5">GPT-3.5</option>
+            <option value="bard">Bard</option>
+          </select>
+        </label>
+      </div>
     </div>
-    <div class="draggable-dropdown" id="dropdown3" draggable="true" ondragstart="drag(event)">
-      <label>
-        <select>
-          <option value="gpt4">GPT-4</option>
-          <option value="gpt3.5">GPT-3.5</option>
-          <option value="bard">Bard</option>
-        </select>
-      </label>
+    <div class="dropdown-container">
+      <h3>Find Best</h3>
+      <div class="draggable-dropdown" draggable="true" id="dropdown_3" ondragstart="drag(event)">
+        <label>
+          <select>
+            <option value="gpt4">GPT-4</option>
+            <option value="gpt3.5">GPT-3.5</option>
+            <option value="bard">Bard</option>
+          </select>
+        </label>
+      </div>
     </div>
-    <div class="draggable-dropdown" id="dropdown4" draggable="true" ondragstart="drag(event)">
-      <label>
-        <select>
-          <option value="gpt4">GPT-4</option>
-          <option value="gpt3.5">GPT-3.5</option>
-          <option value="bard">Bard</option>
-        </select>
-      </label>
+    <div class="dropdown-container">
+      <h3>Verify</h3>
+      <div class="draggable-dropdown" draggable="true" id="dropdown_4" ondragstart="drag(event)">
+        <label>
+          <select>
+            <option value="gpt4">GPT-4</option>
+            <option value="gpt3.5">GPT-3.5</option>
+            <option value="bard">Bard</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div class="dropdown-container">
+      <h3>Polish Variables</h3>
+      <div class="draggable-dropdown" draggable="true" id="dropdown_5" ondragstart="drag(event)">
+        <label>
+          <select>
+            <option value="gpt4">GPT-4</option>
+            <option value="gpt3.5">GPT-3.5</option>
+            <option value="bard">Bard</option>
+          </select>
+        </label>
+      </div>
     </div>
   </div>
 
   <!-- Drop zone -->
-  <div id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)">Drop here</div>
-
+  <div id="drop-zone">
+    <div class="drop-column" id="column_1" ondrop="drop(event)" ondragover="allowDrop(event)">Drop here</div>
+    <div class="drop-column" id="column_2" ondrop="drop(event)" ondragover="allowDrop(event)">Drop here</div>
+    <div class="drop-column" id="column_3" ondrop="drop(event)" ondragover="allowDrop(event)">Drop here</div>
+    <div class="drop-column" id="column_4" ondrop="drop(event)" ondragover="allowDrop(event)">Drop here</div>
+    <div class="drop-column" id="column_5" ondrop="drop(event)" ondragover="allowDrop(event)">Drop here</div>
+    <!-- Add more columns if you have more dropdowns -->
+  </div>
+  
   <script nonce="${nonce}">
     // script-placeholder
   </script>

@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
 import { apiMappings } from '../apis/apiNameMappings';
-import { getNonce, saveDroppedItem } from './common/helper';
+import { getNonce, removeDroppedItem, saveDroppedItem } from './common/helper';
 
 // Import the interface
 
@@ -13,32 +13,11 @@ export function createDashboard(context: vscode.ExtensionContext) {
     vscode.ViewColumn.One,{ enableScripts: true }
   );
 
+  // context.globalState.update('droppedItems', undefined);
   console.log(context.globalState.get('droppedItems', []));
+  
 
-  const htmlFilePath = path.join(context.extensionPath, 'src', 'webview', 'index.html');
-  let htmlContent = fs.readFileSync(htmlFilePath, 'utf8');
-
-  const styleFilePath = path.join(context.extensionPath, 'src', 'webview', 'styles', 'style.css');
-  const styleContent = fs.readFileSync(styleFilePath, 'utf8');
-
-  const scriptFilePath = path.join(context.extensionPath, 'src', 'webview', 'scripts', 'main.js');
-  const scriptContent = fs.readFileSync(scriptFilePath, 'utf8');
-
-  const nonce = getNonce();
-
-  // Now create dropdown options using the apiMappings
-  const dropdownOptions = Object.entries(apiMappings).map(([key, value]) => `<option value="${value}">${key}</option>`).join('');
-
-  // Find and replace the placeholder in your HTML with the created dropdown options
-  htmlContent = htmlContent.replace(/<select>(.*?)<\/select>/gs, `<select>$1${dropdownOptions}</select>`);
-  // Replace placeholders in the HTML content
-  htmlContent = htmlContent.replace('/* style-placeholder */', styleContent);
-  htmlContent = htmlContent.replace('// script-placeholder', scriptContent);
-  htmlContent = htmlContent.replace(/\${nonce}/g, nonce);
-
-  const droppedItems = context.globalState.get('droppedItems', []);
-
-  panel.webview.html = getWebviewContent(htmlContent, nonce, droppedItems, scriptContent);
+  panel.webview.html = getWebviewContent(context);
 
   panel.webview.onDidReceiveMessage(
     message => {
@@ -46,41 +25,48 @@ export function createDashboard(context: vscode.ExtensionContext) {
         case 'saveDroppedItem':
           saveDroppedItem(context, message.data);
           return;
-      } 
+        case 'removeDroppedItem':
+          removeDroppedItem(context, message.data);
+          return;
+      }
     },
     undefined,
     context.subscriptions
   );
-
-
-  // console.log(htmlContent);
-  panel.webview.html = htmlContent;
 }
 
 
+function getWebviewContent(context: vscode.ExtensionContext): string{
 
+  const htmlFilePath = path.join(context.extensionPath, 'src', 'webview', 'index.html');
+  const styleFilePath = path.join(context.extensionPath, 'src', 'webview', 'styles', 'style.css');
+  const scriptFilePath = path.join(context.extensionPath, 'src', 'webview', 'scripts', 'main.js');
+  let htmlContent = fs.readFileSync(htmlFilePath, 'utf8');
+  const styleContent = fs.readFileSync(styleFilePath, 'utf8');
+  const scriptContent = fs.readFileSync(scriptFilePath, 'utf8');
+  const nonce = getNonce();
 
-// function saveDroppedItem(context: vscode.ExtensionContext, data: any) {
-//   let droppedItems: any = context.globalState.get('droppedItems', []);
-  
-//   // Update or add new item to the droppedItems
-//   const existingIndex = droppedItems.findIndex(item => item.id === data.id);
-//   if (existingIndex !== -1) {
-//     droppedItems[existingIndex] = data;
-//   } else {
-//     droppedItems.push(data);
-//   }
-  
-//   context.globalState.update('droppedItems', droppedItems);
-// }
+  // Now create dropdown options using the apiMappings
+  const dropdownOptions = Object.entries(apiMappings).map(([key, value]) => `<option value="${value}">${key}</option>`).join('');
 
-function getWebviewContent(htmlContent: string, nonce: string, droppedItems: any[], scriptContent: string): string {
-  // Inject nonce and other dynamic values into the HTML content
-  // ...
+  // Replace placeholders in the HTML content
+  htmlContent = htmlContent.replace('/* style-placeholder */', styleContent);
+  // htmlContent = htmlContent.replace('// script-placeholder', scriptContent);
+  // Find and replace the placeholder in your HTML with the created dropdown options
+  htmlContent = htmlContent.replace(/<select>(.*?)<\/select>/gs, `<select>$1${dropdownOptions}</select>`);
+  htmlContent = htmlContent.replace(/\${nonce}/g, nonce);
 
-  // Send a message to the webview with the dropped items
-  const scriptContentWithDroppedItems = scriptContent.replace('/* dropped-items-placeholder */', `const droppedItems = ${JSON.stringify(droppedItems)};`);
+  const droppedItems = context.globalState.get('droppedItems', []);
+  // Prepare the script to restore the dropped items
+  const restoreScript = `
+  // Assuming droppedItems is already declared in main.js
+  droppedItems.splice(0, droppedItems.length, ...${JSON.stringify(droppedItems)});
+  restoreDroppedItems(droppedItems);
+  `;
 
-  htmlContent = htmlContent.replace('// script-placeholder', scriptContentWithDroppedItems);
+  console.log(restoreScript);
+
+  htmlContent = htmlContent.replace('// script-placeholder', scriptContent + '\n' + restoreScript);
+  // console.log(htmlContent);
   return htmlContent;
 }

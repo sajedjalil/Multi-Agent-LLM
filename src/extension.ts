@@ -9,7 +9,7 @@ import { createCodeLensMain } from './codelens/CodeLensMain';
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	context.globalState.update('droppedItems', []);
+	// context.globalState.update('droppedItems', []);
 	activateDashboard(context);
 	activateCodeLens(context);
 	// activateMenuItem(context);ß
@@ -32,12 +32,12 @@ function activateDashboard(context: vscode.ExtensionContext){
 	  // Update the global state to indicate that the dashboard has been shown
 	  context.globalState.update('isFirstRun', false);
 	}
-  
+	
 	// Command registration for opening the dashboard
 	const disposable = vscode.commands.registerCommand('multi-agent-llm.openDashboard', () => {
 	  createDashboard(context);
 	});
-  
+
 	context.subscriptions.push(disposable);
 }
 

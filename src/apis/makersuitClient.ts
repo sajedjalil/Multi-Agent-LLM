@@ -1,14 +1,15 @@
 import axios from 'axios';
+import { APIClients } from './apiClients';
 
+export class MakersuitClient implements APIClients{
+  private readonly API_KEY = 'AIzaSyAltfeKzYT3Fx7QpIK0yQiztLy1qtvDD64';
+  private readonly API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta3/models/';
 
-const API_KEY = 'AIzaSyAltfeKzYT3Fx7QpIK0yQiztLy1qtvDD64';
-const API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText';
-
-export async function chat(content: string): Promise<string> {
+  async chat(content: string, model: string): Promise<string> {
     
     try {
       const response = await axios.post(
-        `${API_ENDPOINT}?key=${API_KEY}`,
+        `${this.API_ENDPOINT+model+':generateText'}?key=${this.API_KEY}`,
         { prompt: { text: content } },
         { headers: { 'Content-Type': 'application/json' } }
       );
@@ -26,4 +27,6 @@ export async function chat(content: string): Promise<string> {
         throw new Error('Error calling the API');
       }
     }
+  }
 }
+

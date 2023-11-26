@@ -11,7 +11,8 @@ export function getComments(document: vscode.TextDocument, token: vscode.Cancell
       const lineOfText = document.lineAt(i);
       if (singleLineCommentRegex.test(lineOfText.text)) {
         const range = new vscode.Range(i, 0, i, lineOfText.text.length);
-        codeLenses.push(createCodeLens(document, range));
+        codeLenses.push(createCodeLensRun(document, range));
+        codeLenses.push(createCodeLensRephrase(document, range));
       }
     }
 
@@ -20,7 +21,8 @@ export function getComments(document: vscode.TextDocument, token: vscode.Cancell
       const startPos = document.positionAt(match.index);
       const endPos = document.positionAt(match.index + match[0].length);
       const range = new vscode.Range(startPos, endPos);
-      codeLenses.push(createCodeLens(document, range));
+      codeLenses.push(createCodeLensRun(document, range));
+      codeLenses.push(createCodeLensRephrase(document, range));
     }
 
     return codeLenses;
@@ -28,10 +30,18 @@ export function getComments(document: vscode.TextDocument, token: vscode.Cancell
 
 
 
-function createCodeLens(document: vscode.TextDocument, range: vscode.Range): vscode.CodeLens {
+function createCodeLensRun(document: vscode.TextDocument, range: vscode.Range): vscode.CodeLens {
     return new vscode.CodeLens(range, {
         title: "Run",
         command: "multi-agent-llm.runCommentCode",
         arguments: [document, range]
     });
+}
+
+function createCodeLensRephrase(document: vscode.TextDocument, range: vscode.Range): vscode.CodeLens {
+  return new vscode.CodeLens(range, {
+      title: "Rephrase",
+      command: "multi-agent-llm.runRephrase",
+      arguments: [document, range]
+  });
 }

@@ -7,6 +7,6 @@ export async function rephrase(content: string, language: string, apiClients: AP
 
     // console.log(formattedContent);
     const apiResponse = await apiClients.chat(formattedContent, model );
-    // console.log(apiResponse);
+    console.log('Reprhased Step:\n'+apiResponse+'\n\n---------------------\n\n');
     return apiResponse;
 }

@@ -7,8 +7,8 @@ export async function polishVariables(requirement:string, content: string, langu
         +content
         +'\nCan you refactor the variable names in the code for better understandability?';
 
-    console.log(formattedContent);
+    console.log('Before Polishing Variables:\n\n'+formattedContent+'\n\n---------------------\n\n');
     const apiResponse = await apiClients.chat(formattedContent, model );
-    // console.log(apiResponse);
+    console.log('After Polishing Variables:\n\n'+apiResponse+'\n\n---------------------\n\n');
     return apiResponse;
 }

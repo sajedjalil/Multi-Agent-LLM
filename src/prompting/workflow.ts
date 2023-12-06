@@ -23,7 +23,7 @@ export class Workflow {
     }
 
     public async run(): Promise<String> {
-        let results: string[] = [];
+        
         for (const item of this.dashboard) {
             const apiClass = getAPIClass(item);
             if (item.column.includes('1')) {
@@ -37,13 +37,13 @@ export class Workflow {
         }
 
         
-
+        let results: string[] = [];
         let tempResults: string[] = [];
         for (const item of this.dashboard) {
             const apiClass = getAPIClass(item);
             if (item.column.includes('2')) {
                 if (apiClass) {
-                    tempResults.push(await generateCode(results[0], this.language, apiClass, item.value));
+                    tempResults.push(await generateCode(this.initialText, this.language, apiClass, item.value));
                 }
             }
         }
@@ -65,9 +65,10 @@ export class Workflow {
                         // append all the result into a single string. Run the loop from the second element
                         let content = '';
                         for (let i = 1; i < results.length; i++) {
-                            content += 'Option '+i+':\n'+results[i];
+                            content += 'Option '+i+':\n'+results[i]+'\n\n---------------------\n\n';
                         }
                         tempResults.push(await bestResponse(results[0], content, this.language, apiClass, item.value));
+                        console.log('Best Response Selection Step:\n\n'+tempResults[1]+"\n\n---------------------\n\n");
                         vscode.window.showInformationMessage('Best Response Selection Completed!');
                         break;
                     }
